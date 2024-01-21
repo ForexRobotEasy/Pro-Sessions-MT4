@@ -1,0 +1,101 @@
+
+// Pro Sessions MT4
+// Developer's Site: forexroboteasy.com
+// Development: Forex Robot Easy Team
+
+// Define session structure
+struct Session {
+   datetime open;
+   datetime high;
+   datetime low;
+   datetime close;
+}
+
+// Define array to store session data
+Session sessions[4];
+
+// Define variable for Average Session Range (ASR)
+int asrPeriod = 20;
+
+// Custom function to calculate ASR
+double CalculateASR(int sessionIndex) {
+   double sum = 0;
+   for (int i = 0; i < asrPeriod; i++) {
+      sum += sessions[sessionIndex - i].high - sessions[sessionIndex - i].low;
+   }
+   return sum / asrPeriod;
+}
+
+// Custom function to draw session lines or rectangles
+void DrawSession(int sessionIndex, bool extendLine) {
+   datetime startTime = sessions[sessionIndex].open;
+   datetime endTime = sessions[sessionIndex].close;
+   if (extendLine && sessionIndex < 3) {
+      endTime = sessions[sessionIndex + 1].open;
+   }
+   // Draw session using lines or rectangles
+   // ...
+}
+
+// Custom function to hide or show session
+void ToggleSession(int sessionIndex) {
+   // Hide or show session based on sessionIndex
+   // ...
+}
+
+// Custom function to predict session levels
+void PredictSessionLevels() {
+   // Predict session levels based on previous data
+   // ...
+}
+
+// Custom function to display OHLC levels for sessions
+void DisplayOHLC() {
+   // Display OHLC levels for each session
+   // ...
+}
+
+// Custom function to initialize sessions data
+void InitializeSessions() {
+   // Initialize sessions data based on historical data
+   // ...
+}
+
+// Custom function to handle hotkey functionality
+void HandleHotkey(int key) {
+   switch (key) {
+      case '1':
+         ToggleSession(0);
+         break;
+      case '2':
+         ToggleSession(1);
+         break;
+      case '3':
+         ToggleSession(2);
+         break;
+      case '4':
+         ToggleSession(3);
+         break;
+   }
+}
+
+// Entry point of the program
+void OnStart() {
+   // Initialize sessions data
+   InitializeSessions();
+   
+   // Display OHLC levels for sessions
+   DisplayOHLC();
+   
+   // Predict session levels
+   PredictSessionLevels();
+   
+   // Draw session lines or rectangles
+   DrawSession(0, true);
+   DrawSession(1, true);
+   DrawSession(2, true);
+   DrawSession(3, false);
+   
+   // Handle hotkey functionality
+   HandleHotkey(GetKey());
+}
